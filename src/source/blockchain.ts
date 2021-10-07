@@ -1,4 +1,4 @@
-const cryptoo = require("crypto");
+const crypto = require("crypto");
 const EC = require("elliptic").ec;
 const ec = new EC("secp256k1");
 
@@ -13,7 +13,7 @@ export class Transaction {
     }
 
     calculateHash() {
-        return cryptoo
+        return crypto
         .createHash("sha256")
         .update(this.fromAddress + this.toAddress + this.amount + this.timestamp)
         .digest("hex");
@@ -45,7 +45,7 @@ export class Transaction {
 export class Block {
     public nonce: number
     public hash: string
-    constructor(public timestamp: number,public transactions: Array<any>, public previousHash: String = "") {
+    constructor(public timestamp: number,public transactions: Array<Transaction>, public previousHash: string = "") {
         this.previousHash = previousHash; //string
         this.timestamp = timestamp;
         this.transactions = transactions; //Transaction[]
@@ -54,7 +54,7 @@ export class Block {
     }
 
     calculateHash() {
-        return cryptoo
+        return crypto
         .createHash("sha256")
         .update(
             this.previousHash +
