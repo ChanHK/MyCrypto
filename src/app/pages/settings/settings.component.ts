@@ -1,5 +1,4 @@
 import { BlockchainService } from './../../services/blockchain.service';
-import { Blockchain } from './../../../source/blockchain';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
