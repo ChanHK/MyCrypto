@@ -13,25 +13,48 @@
   </thead>
   <tbody>
     <tr *ngFor="let tx of transactions; index as index">
-      <td>{{ "{{" }}index{{'}}'}}</td>
+      <td>{{ index }}</td>
       <td class="text-truncate" style="max-width: 100px">
-        {{ "{{" }}tx.fromAddress{{'}}'}}
-        <span *ngIf="tx.fromAddress === null">System</span>
-      </td>
-      <td class="text-truncate" style="max-width: 100px">
-        {{ "{{" }}tx.toAddress{{'}}'}}
-      </td>
+        <a
+          [routerLink]="['/wallet', tx.fromAddress]"
+          *ngIf="tx.fromAddress !== null"
+          >{{ tx.fromAddress }}</a
+        >
 
+        <span *ngIf="tx.fromAddress === null">System</span>
+
+        <span
+          class="text-muted"
+          *ngIf="blockchainService.addressIsFromCurrentUser(tx.fromAddress)"
+        >
+          <br /><small>(That's yours!)</small>
+        </span>
+      </td>
+      <td class="text-truncate" style="max-width: 100px">
+        <a [routerLink]="['/wallet', tx.toAddress]">{{ tx.toAddress }}</a>
+
+        <span
+          class="text-muted"
+          *ngIf="blockchainService.addressIsFromCurrentUser(tx.toAddress)"
+        >
+          <br /><small>(That's yours!)</small>
+        </span>
+      </td>
       <td>
-        {{ "{{" }}tx.amount{{'}}'}}
+        {{ tx.amount }}
         <span *ngIf="tx.fromAddress === null" class="text-muted"
-          ><br /><small> {{ "{" }}Block reward{{ "}" }} </small></span
+          ><br /><small>(Block reward)</small></span
         >
       </td>
-
+      <td>
+        {{ tx.timestamp }}<br />
+        <span class="text-muted"
+          ><small>{{ tx.timestamp | date: "MMM d, y, HH:mm" }}</small></span
+        >
+      </td>
       <td style="max-width: 40px">
-        <span *ngIf="tx.isValid()">Y</span>
-        <span *ngIf="!tx.isValid()">N</span>
+        <span *ngIf="tx.isValid()">✓</span>
+        <span *ngIf="!tx.isValid()">✗</span>
       </td>
     </tr>
   </tbody>
