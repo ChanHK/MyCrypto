@@ -2,9 +2,9 @@
   <div class="card-body">
     <h5 class="card-title">
       Block
-      <small class="text-muted" *ngIF="block.previousHash == 0">
-        {{ '{' }}Genesis block{{ '}' }}
-      </small>
+      <small class="text-muted" *ngIF="block.previousHash == 0"
+        >(Genesis block)</small
+      >
     </h5>
   </div>
 
@@ -16,26 +16,26 @@
         class="text-truncate"
         [style.color]="'#' + block.hash.substring(0, 6)"
       >
-        <small>{{ '{{' }}block.hash{{ '}}' }}</small>
+        <small>{{ block.hash }}</small>
       </div>
 
       <br />
 
-      <span class="">{{ '{{' }}Hash of previous block{{ '}}' }}</span>
+      <span class="">Hash of previous block</span>
       <br />
 
       <div
         class="text-truncate"
         [style.color]="'#' + block.previousHash.substring(0, 6)"
       >
-        <small>{{ '{{' }}block.previousHash{{ '{{' }}</small>
+        <small>{{ block.previousHash }}</small>
       </div>
     </li>
 
     <li class="list-group-item">
       <span class="">Nonce</span><br />
       <div class="text-truncate text-muted">
-        <small>{{ '{{' }}block.nonce{{ '{{' }}</small>
+        <small>{{ block.nonce }}</small>
       </div>
     </li>
 
