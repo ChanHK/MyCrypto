@@ -8,6 +8,7 @@ import { BlockViewComponent } from './components/block-view/block-view.component
 import { TransactionsTableComponent } from './components/transactions-table/transactions-table.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { FormsModule } from '@angular/forms';
+import { BlockchainService } from './services/blockchain.service';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { FormsModule } from '@angular/forms';
     SettingsComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
-  providers: [],
+  providers: [BlockchainService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
