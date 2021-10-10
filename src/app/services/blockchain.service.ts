@@ -7,33 +7,29 @@ import * as EC from 'elliptic';
   providedIn: 'root',
 })
 export class BlockchainService {
-
-  public blockchainInstance = new Blockchain();
-  public walletKeys:Array<IWalletKey> = [];
-
+  bcObj = new Blockchain();
+  walletKeys: Array<IWalletKey> = [];
 
   constructor() {
-    this.blockchainInstance.difficulty = 1;
-    this.blockchainInstance.minePendingTransactions('my-wallet-address');
+    this.bcObj.difficulty = 1;
+    this.bcObj.minePendingTransactions('my-wallet-address');
 
     this.generateWalletKeys();
   }
 
-  getBlocks(){
-    return this.blockchainInstance.chain;
-  }
+  getBlocks = () => {
+    return this.bcObj.chain;
+  };
 
   minePendingTransactions() {
-    this.blockchainInstance.minePendingTransactions(
-      this.walletKeys[0].publicKey
-    );
+    this.bcObj.minePendingTransactions(this.walletKeys[0].publicKey);
   }
 
-  addressIsFromCurrentUser(address: string) {
+  addressIsFromCurrentUser = (address: string) => {
     return address === this.walletKeys[0].publicKey;
-  }
+  };
 
-  generateWalletKeys() {
+  generateWalletKeys = () => {
     const ec = new EC.ec('secp256k1');
     const key = ec.genKeyPair();
 
@@ -42,17 +38,15 @@ export class BlockchainService {
       publicKey: key.getPublic('hex'),
       privateKey: key.getPrivate('hex'),
     });
+  };
 
-    console.log(this.walletKeys);
-  }
+  getPendingTransactions = () => {
+    return this.bcObj.pendingTransactions;
+  };
 
-  getPendingTransactions() {
-    return this.blockchainInstance.pendingTransactions;
-  }
-
-  addTransaction(tx: Transaction) {
-    this.blockchainInstance.addTransaction(tx);
-  }
+  addTransaction = (x: Transaction) => {
+    this.bcObj.addTransaction(x);
+  };
 }
 
 export interface IWalletKey {
