@@ -6,19 +6,19 @@ import { AppComponent } from './app.component';
 import { BlockchainViewerComponent } from './pages/blockchain-viewer/blockchain-viewer.component';
 import { BlockViewComponent } from './components/block-view/block-view.component';
 import { TransactionsTableComponent } from './components/transactions-table/transactions-table.component';
+import { SettingsComponent } from './pages/settings/settings.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     BlockchainViewerComponent,
     BlockViewComponent,
-    TransactionsTableComponent
+    TransactionsTableComponent,
+    SettingsComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
