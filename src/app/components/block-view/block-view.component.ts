@@ -16,7 +16,7 @@ export class BlockViewComponent implements OnInit {
   private blocksInChain;
 
   constructor(private blockchainService: BlockchainService) {
-    this.blocksInChain = blockchainService.blockchainInstance.chain;
+    this.blocksInChain = blockchainService.bcObj.chain;
   }
 
   ngOnInit(): void {}
