@@ -7,8 +7,8 @@ import * as EC from 'elliptic';
   providedIn: 'root',
 })
 export class BlockchainService {
-  bcObj = new Blockchain();
-  walletKeys: Array<IWalletKey> = [];
+  public bcObj = new Blockchain();
+  public walletKeys: Array<IWalletKey> = [];
 
   constructor() {
     this.bcObj.difficulty = 1;
@@ -16,10 +16,6 @@ export class BlockchainService {
 
     this.generateWalletKeys();
   }
-
-  getBlocks = () => {
-    return this.bcObj.chain;
-  };
 
   minePendingTransactions() {
     this.bcObj.minePendingTransactions(this.walletKeys[0].publicKey);
