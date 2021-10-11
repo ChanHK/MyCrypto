@@ -2,9 +2,9 @@ import { Transaction } from './transaction.model';
 import * as crypto from 'crypto';
 
 export class Block {
-  private nonce: number;
+  private _nonce: number;
   private _hash: string;
-  private timestamp: number;
+  private _timestamp: number;
   public transactions: Array<Transaction>;
   private _previousHash: string;
 
@@ -14,9 +14,9 @@ export class Block {
     previousHash: string = ''
   ) {
     this._previousHash = previousHash;
-    this.timestamp = timestamp;
+    this._timestamp = timestamp;
     this.transactions = transactions;
-    this.nonce = 0;
+    this._nonce = 0;
     this._hash = this.calculateHash();
   }
 
@@ -27,11 +27,18 @@ export class Block {
     this._hash = value;
   }
 
-  get previousHash(): string {
-    return this._previousHash;
+  get timestamp(): number {
+    return this._timestamp;
   }
-  set previousHash(value: string) {
-    this._previousHash = value;
+  set timestamp(value: number) {
+    this._timestamp = value;
+  }
+
+  get nonce(): number {
+    return this._nonce;
+  }
+  set nonce(value: number) {
+    this._nonce = value;
   }
 
   calculateHash = () => {
@@ -39,9 +46,9 @@ export class Block {
       .createHash('sha256')
       .update(
         this._previousHash +
-          this.timestamp.toString() +
+          this._timestamp.toString() +
           JSON.stringify(this.transactions) +
-          this.nonce
+          this._nonce
       )
       .digest('hex');
   };
@@ -50,7 +57,7 @@ export class Block {
     while (
       this._hash.substring(0, difficulty) !== Array(difficulty + 1).join('0')
     ) {
-      this.nonce++;
+      this._nonce++;
       this._hash = this.calculateHash();
     }
 
