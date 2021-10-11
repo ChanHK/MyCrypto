@@ -41,6 +41,13 @@ export class Block {
     this._nonce = value;
   }
 
+  get previousHash(): string {
+    return this._previousHash;
+  }
+  set previousHash(value: string) {
+    this._previousHash = value;
+  }
+
   calculateHash = () => {
     return crypto
       .createHash('sha256')
