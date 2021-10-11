@@ -2,7 +2,7 @@ import { Block } from './block.model';
 import { Transaction } from './transaction.model';
 
 export class Blockchain {
-  private chain: Array<Block>;
+  public chain: Array<Block>;
   private _difficulty: number;
   public pendingTransactions: Array<any>;
   private _miningReward: number;
