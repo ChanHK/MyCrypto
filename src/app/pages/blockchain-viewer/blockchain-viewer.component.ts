@@ -1,18 +1,19 @@
-import { BlockchainService } from './../../services/blockchain.service';
+import { BlockchainService } from '../../services/blockchain.service';
 import { Component, OnInit } from '@angular/core';
-import { Block } from 'src/source/blockchain';
+import { Block } from 'src/app/classes/block.model';
 
 @Component({
   selector: 'app-blockchain-viewer',
   templateUrl: './blockchain-viewer.component.html',
   styleUrls: ['./blockchain-viewer.component.scss'],
+  providers: [BlockchainService],
 })
 export class BlockchainViewerComponent implements OnInit {
-  public blocks: any = [];
+  public blocks: Array<any> = [];
   public selectedBlock: any = null;
 
   constructor(private blockchainService: BlockchainService) {
-    this.blocks = blockchainService.blockchainInstance.chain;
+    this.blocks = this.blockchainService.bcObj.chain;
     this.selectedBlock = this.blocks[0];
   }
 
