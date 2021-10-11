@@ -3,23 +3,38 @@ import { Transaction } from './transaction.model';
 
 export class Blockchain {
   private chain: Array<Block>;
-  private difficulty: number;
-  private pendingTransactions: Array<any>;
-  private miningReward: number;
+  private _difficulty: number;
+  public pendingTransactions: Array<any>;
+  private _miningReward: number;
 
   constructor() {
     this.chain = [this.createGenesisBlock()];
-    this.difficulty = 2;
+    this._difficulty = 2;
     this.pendingTransactions = [];
-    this.miningReward = 100;
+    this._miningReward = 100;
   }
+
+  get difficulty(): number {
+    return this._difficulty;
+  }
+  set difficulty(value: number) {
+    this._difficulty = value;
+  }
+
+  get miningReward(): number {
+    return this._miningReward;
+  }
+  set miningReward(value: number) {
+    this._miningReward = value;
+  }
+
 
   createGenesisBlock() {
     return new Block(Date.now(), [], '0');
   }
 
   minePendingTransactions = (address: string) => {
-    const reward = new Transaction(address, this.miningReward); // fromaddress is null
+    const reward = new Transaction(address, this._miningReward); // fromaddress is null
     this.pendingTransactions.push(reward);
 
     const block = new Block(
@@ -28,7 +43,7 @@ export class Blockchain {
       this.chain[this.chain.length - 1].hash
     );
 
-    block.mineBlock(this.difficulty);
+    block.mineBlock(this._difficulty);
     this.chain.push(block);
     this.pendingTransactions = []; //clear pending transactions
   };
