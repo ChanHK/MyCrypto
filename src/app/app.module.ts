@@ -9,6 +9,9 @@ import { TransactionsTableComponent } from './components/transactions-table/tran
 import { SettingsComponent } from './pages/settings/settings.component';
 import { FormsModule } from '@angular/forms';
 import { BlockchainService } from './services/blockchain.service';
+import { CreateTransactionComponent } from './pages/create-transaction/create-transaction.component';
+import { PendingTransactionsComponent } from './pages/pending-transactions/pending-transactions.component';
+import { WalletBalanceComponent } from './pages/wallet-balance/wallet-balance.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +20,9 @@ import { BlockchainService } from './services/blockchain.service';
     BlockViewComponent,
     TransactionsTableComponent,
     SettingsComponent,
+    CreateTransactionComponent,
+    PendingTransactionsComponent,
+    WalletBalanceComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [BlockchainService],
