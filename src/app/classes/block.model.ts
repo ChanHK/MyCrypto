@@ -1,5 +1,6 @@
 import { Transaction } from './transaction.model';
 import * as crypto from 'crypto';
+import { SHA256 } from 'crypto-js';
 
 export class Block {
   private _nonce: number;
@@ -49,15 +50,21 @@ export class Block {
   }
 
   calculateHash = () => {
-    return crypto
-      .createHash('sha256')
-      .update(
-        this._previousHash +
-          this._timestamp.toString() +
-          JSON.stringify(this.transactions) +
-          this._nonce
-      )
-      .digest('hex');
+    // return crypto
+    //   .createHash('sha256')
+    //   .update(
+    //     this._previousHash +
+    //       this._timestamp.toString() +
+    //       JSON.stringify(this.transactions) +
+    //       this._nonce
+    //   )
+    //   .digest('hex');
+    return SHA256(
+      this._previousHash +
+        this._timestamp.toString() +
+        JSON.stringify(this.transactions) +
+        this._nonce
+    ).toString();
   };
 
   mineBlock = (difficulty: number) => {
