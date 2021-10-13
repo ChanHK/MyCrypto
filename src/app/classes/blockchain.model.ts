@@ -28,13 +28,12 @@ export class Blockchain {
     this._miningReward = value;
   }
 
-
   createGenesisBlock() {
     return new Block(Date.now(), [], '0');
   }
 
   minePendingTransactions = (address: string) => {
-    const reward = new Transaction(address, this._miningReward); // fromaddress is null
+    const reward = new Transaction(address, undefined, this._miningReward); // fromaddress is null
     this.pendingTransactions.push(reward);
 
     const block = new Block(
@@ -58,9 +57,12 @@ export class Blockchain {
       throw new Error('Invalid From or To address');
     if (!t.isValid())
       throw new Error('Cannot add invalid transaction to chain');
-    if (t.amount <= 0) throw new Error('Amount is invalid');
-    if (this.calAddressBalance(t.fromAddress) < t.amount)
-      throw new Error('Invalid balance');
+    if (t.amount != undefined) {
+      if (t.amount <= 0) throw new Error('Amount is invalid');
+      if (this.calAddressBalance(t.fromAddress) < t.amount) {
+        throw new Error('Invalid balance');
+      }
+    }
   };
 
   calAddressBalance = (address: string) => {
@@ -68,8 +70,10 @@ export class Blockchain {
 
     for (const block of this.chain) {
       for (const trans of block.transactions) {
-        if (trans.fromAddress === address) balance -= trans.amount;
-        if (trans.toAddress === address) balance += trans.amount;
+        if (trans.amount != undefined) {
+          if (trans.fromAddress === address) balance -= trans.amount;
+          if (trans.toAddress === address) balance += trans.amount;
+        }
       }
     }
     return balance;
