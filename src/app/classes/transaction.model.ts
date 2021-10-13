@@ -5,11 +5,11 @@ const ec = new EC('secp256k1');
 export class Transaction {
   private timestamp;
   private signature: string | undefined;
-  private _toAddress: string;
-  private _amount: number;
+  private _toAddress: string | undefined;
+  private _amount: number | undefined;
   private _fromAddress: string | undefined;
 
-  constructor(toAddress: string, amount: number, fromAddress?: string) {
+  constructor(fromAddress?: string, toAddress?: string, amount?: number) {
     this._fromAddress = fromAddress;
     this._toAddress = toAddress;
     this._amount = amount;
@@ -23,21 +23,23 @@ export class Transaction {
     this._fromAddress = value;
   }
 
-  get toAddress(): string {
+  get toAddress(): string | undefined {
     return this._toAddress;
   }
-  set toAddress(value: string) {
+  set toAddress(value: string | undefined) {
     this._toAddress = value;
   }
 
-  get amount(): number {
+  get amount(): number | undefined {
     return this._amount;
   }
-  set amount(value: number) {
+  set amount(value: number | undefined) {
     this._amount = value;
   }
 
   calculateHash() {
+    if (this._fromAddress === undefined) return undefined;
+    else
     return crypto
       .createHash('sha256')
       .update(
