@@ -1,51 +1,50 @@
-import * as crypto from 'crypto';
+import { SHA256 } from 'crypto-js';
 const EC = require('elliptic').ec;
 const ec = new EC('secp256k1');
 
 export class Transaction {
   private timestamp;
   private signature: string | undefined;
-  private _toAddress: string | undefined;
-  private _amount: number | undefined;
-  private _fromAddress: string | undefined;
+  private _toAddress: string;
+  private _amount: number;
+  private _fromAddress: string;
 
-  constructor(fromAddress?: string, toAddress?: string, amount?: number) {
+  constructor(
+    fromAddress: string = '',
+    toAddress: string = '',
+    amount: number = 100
+  ) {
     this._fromAddress = fromAddress;
     this._toAddress = toAddress;
     this._amount = amount;
     this.timestamp = Date.now();
   }
 
-  get fromAddress(): string | undefined {
+  get fromAddress(): string {
     return this._fromAddress;
   }
-  set fromAddress(value: string | undefined) {
+  set fromAddress(value: string) {
     this._fromAddress = value;
   }
 
-  get toAddress(): string | undefined {
+  get toAddress(): string {
     return this._toAddress;
   }
-  set toAddress(value: string | undefined) {
+  set toAddress(value: string) {
     this._toAddress = value;
   }
 
-  get amount(): number | undefined {
+  get amount(): number {
     return this._amount;
   }
-  set amount(value: number | undefined) {
+  set amount(value: number) {
     this._amount = value;
   }
 
   calculateHash() {
-    if (this._fromAddress === undefined) return undefined;
-    else
-    return crypto
-      .createHash('sha256')
-      .update(
-        this._fromAddress + this._toAddress + this._amount + this.timestamp
-      )
-      .digest('hex');
+    return SHA256(
+      this._fromAddress + this._toAddress + this._amount + this.timestamp
+    ).toString();
   }
 
   signTransaction = (key: any) => {
@@ -61,7 +60,7 @@ export class Transaction {
   };
 
   isValid = () => {
-    if (this._fromAddress === null) return true;
+    if (this._fromAddress === '') return true;
     if (!this.signature || this.signature.length === 0) {
       throw new Error('No signature in this transaction');
     }
