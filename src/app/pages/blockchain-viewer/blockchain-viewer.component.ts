@@ -6,10 +6,9 @@ import { Block } from 'src/app/classes/block.model';
   selector: 'app-blockchain-viewer',
   templateUrl: './blockchain-viewer.component.html',
   styleUrls: ['./blockchain-viewer.component.scss'],
-  providers: [BlockchainService],
 })
 export class BlockchainViewerComponent implements OnInit {
-  public blocks: Array<any> = [];
+  public blocks: Array<Block> = [];
   public selectedBlock: any = null;
 
   constructor(private blockchainService: BlockchainService) {
