@@ -17,11 +17,11 @@
       <td class="text-truncate" style="max-width: 100px">
         <a
           [routerLink]="['/wallet', tx.fromAddress]"
-          *ngIf="tx.fromAddress !== null"
+          *ngIf="tx.fromAddress !== ''"
           >{{ tx.fromAddress }}</a
         >
 
-        <span *ngIf="tx.fromAddress === null">System</span>
+        <span *ngIf="tx.fromAddress === ''">System</span>
 
         <span
           class="text-muted"
@@ -42,7 +42,7 @@
       </td>
       <td>
         {{ tx.amount }}
-        <span *ngIf="tx.fromAddress === null" class="text-muted"
+        <span *ngIf="tx.fromAddress === ''" class="text-muted"
           ><br /><small>(Block reward)</small></span
         >
       </td>
