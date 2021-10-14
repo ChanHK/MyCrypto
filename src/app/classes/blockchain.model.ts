@@ -33,7 +33,7 @@ export class Blockchain {
   }
 
   minePendingTransactions = (address: string) => {
-    const reward = new Transaction(address, undefined, this._miningReward); // fromaddress is null
+    const reward = new Transaction('', address, this._miningReward); // fromaddress is null
     this.pendingTransactions.push(reward);
 
     const block = new Block(
@@ -59,9 +59,9 @@ export class Blockchain {
       throw new Error('Cannot add invalid transaction to chain');
     if (t.amount != undefined) {
       if (t.amount <= 0) throw new Error('Amount is invalid');
-      if (this.calAddressBalance(t.fromAddress) < t.amount) {
-        throw new Error('Invalid balance');
-      }
+      // if (this.calAddressBalance(t.fromAddress) < t.amount) {
+      //   throw new Error('Invalid balance');
+      // }
     }
   };
 
